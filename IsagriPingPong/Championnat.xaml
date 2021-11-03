@@ -1,0 +1,140 @@
+﻿<Window x:Class="IsagriPingPong.Championnat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IsagriPingPong"
+        mc:Ignorable="d"
+        Title="Championnat"
+        Height="600"
+        Width="850"
+        Closing="Window_Closing">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Calendrier">
+                <StackPanel Orientation="Vertical">
+                    <DataGrid MaxHeight="400"
+                              MinHeight="200"
+                              AlternatingRowBackground="LightBlue"
+                              Name="xDGCalendrier"
+                              ItemsSource="{Binding ListeRencontre, Mode=TwoWay}"
+                              IsSynchronizedWithCurrentItem="True"
+                              AutoGenerateColumns="False"
+                              CanUserSortColumns="False"
+                              CanUserResizeColumns="False"
+                              CanUserReorderColumns="False"
+                              CanUserAddRows="False"
+                              SelectionChanged="xDGCalendrier_SelectionChanged" KeyUp="xDGCalendrier_KeyUp">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Journee"
+                                                Width="80"
+                                                Binding="{Binding Journee}"                                                
+                                                IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Equipe 1"
+                                                Width="200"
+                                                Binding="{Binding Equipe1.Nom}"
+                                                IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Raquette}"
+                                                         Value="Equipe1">
+                                                <Setter Property="FontWeight"
+                                                        Value="Bold" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Score Equipe1"
+                                                Width="40"
+                                                Binding="{Binding PointEquipe1, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Score Equipe2"
+                                                Width="40"
+                                                Binding="{Binding PointEquipe2, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Equipe 2"
+                                                Width="200"
+                                                Binding="{Binding Equipe2.Nom}"
+                                                IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Raquette}"
+                                                         Value="Equipe2">
+                                                <Setter Property="FontWeight"
+                                                        Value="Bold" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Valider"
+                                                    Width="50">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Valider, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"
+                                                  Name="xCBValider"
+                                                  Tag="{Binding Id}"                                                   
+                                                  PreviewMouseDown="xCBValider_Click"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Raquettes"
+                                                Width="80"
+                                                Binding="{Binding Raquette}"
+                                                IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="xBtValierScore"
+                            Margin="0,20,0,0"
+                            Width="200"
+                            Content="Valider scores (Maj Classement)"
+                            Click="xBtValierScore_Click" />
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Classement" Name="xOngletCL">
+                <StackPanel Orientation="Vertical">
+                    <DataGrid Height="400"
+                              Name="xDGClassement"
+                              AlternatingRowBackground="BlanchedAlmond"
+                              ItemsSource="{Binding ListeParticipant}"
+                              AutoGenerateColumns="false"
+                              IsReadOnly="True"
+                              CanUserSortColumns="False"
+                              CanUserResizeColumns="False"
+                              CanUserReorderColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Position"
+                                                Width="60"
+                                                Binding="{Binding Classement}"/>
+                            <DataGridTextColumn Header="Equipe"
+                                                Width="250"
+                                                Binding="{Binding Nom}" />
+                            <DataGridTextColumn Header="Nb Match"
+                                                Width="80"
+                                                Binding="{Binding NbMatchJoue}" />
+                            <DataGridTextColumn Header="Nb Victoires"
+                                                Width="80"
+                                                Binding="{Binding NbVictoires}" />
+                            <DataGridTextColumn Header="+"
+                                                Width="30"
+                                                Binding="{Binding Plus}" />
+                            <DataGridTextColumn Header="-"
+                                                Width="30"
+                                                Binding="{Binding Moins}" />
+                            <DataGridTextColumn Header="+/-"
+                                                Width="30"
+                                                Binding="{Binding Difference}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="xBtFinTournoi"
+                            Margin="0,20,0,0"
+                            Width="180"
+                            Content="Enregistrer résultats"
+                            Click="xBtFinTournoi_Click" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

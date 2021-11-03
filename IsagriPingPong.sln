@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsagriPingPong", "IsagriPingPong\IsagriPingPong.csproj", "{BC336187-F796-4A7D-AC9D-610580288B90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Afficheur", "..\Afficheur\Afficheur\Afficheur.csproj", "{9CECC614-83BC-4F17-BF36-4D0EF7D20784}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC336187-F796-4A7D-AC9D-610580288B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC336187-F796-4A7D-AC9D-610580288B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC336187-F796-4A7D-AC9D-610580288B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC336187-F796-4A7D-AC9D-610580288B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CECC614-83BC-4F17-BF36-4D0EF7D20784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CECC614-83BC-4F17-BF36-4D0EF7D20784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CECC614-83BC-4F17-BF36-4D0EF7D20784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CECC614-83BC-4F17-BF36-4D0EF7D20784}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

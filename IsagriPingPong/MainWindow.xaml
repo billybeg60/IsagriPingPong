@@ -1,0 +1,245 @@
+﻿<Window x:Class="IsagriPingPong.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IsagriPingPong"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="ISA Ping-Pong"
+        Height="750"
+        Width="850">
+    <TabControl>
+        <TabItem Header="Tournoi">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Margin="0,2,0,0"
+                           HorizontalAlignment="Center"
+                           FontSize="32"
+                           Foreground="Red"
+                           Text="ISA Ping-Pong" />
+                <GroupBox Header="Type de match">
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <RadioButton Content="Simple"
+                                     Name="xRBSimple"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Double"
+                                     Name="xRBDouble"
+                                     IsChecked="True"
+                                     Margin="0,0,10,0" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Type de tournoi">
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <RadioButton Content="Championnat"
+                                     Name="xRBChampionnat"
+                                     IsChecked="True"
+                                     ToolTip="Une poule unique, pas de phase finale"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Phase de poule"
+                                     Name="xRBPoule"
+                                     ToolTip="Phase de poule puis phase finale"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Elimination directe"
+                                     Name="xRBElimination"
+                                     Margin="0,0,10,0" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Tirage au sort">
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <RadioButton Content="Personnalisé"
+                                     Name="xRBTiragePerso"
+                                     ToolTip="Les équipes sont déterminées selon l'ordre de sélection"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Aléatoire"
+                                     Name="xRBTirageAleatoire"
+                                     IsChecked="True"
+                                     ToolTip="Les équipes sont déterminées de manière totalement aléatoire"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Par niveau"
+                                     Name="xRBTirageNiveau"
+                                     ToolTip="Les équipes sont déterminées en fonction du niveau des joueurs"
+                                     Margin="0,0,10,0" />
+                        <RadioButton Content="Par ratio (% victoires)"
+                                     Name="xRBTirageRatio"
+                                     ToolTip="Les équipes sont déterminées en fonction du ratio (% victoires)"
+                                     Margin="0,0,10,0" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Sélection Joueurs">
+                    <StackPanel Orientation="Vertical"
+                                Width="500">
+                        <StackPanel Margin="0,10,0,0"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <ListBox Height="242"
+                                     Width="150"
+                                     Name="xLBJoueurs"
+                                     SelectionMode="Extended">
+                            </ListBox>
+                            <StackPanel Margin="10"
+                                        Orientation="Vertical"
+                                        VerticalAlignment="Center">
+                                <Button Name="xBAjout"
+                                        Margin="0,0,0,10"
+                                        Content="Ajouter"
+                                        Click="xBAjout_Click" />
+                                <Button Name="xBSuppr"
+                                        Content="Supprimer"
+                                        Click="xBSuppr_Click" />
+                            </StackPanel>
+                            <ListBox Height="240"
+                                     Width="150"
+                                     Name="xLBJoueursSelection"
+                                     SelectionMode="Extended" />
+                        </StackPanel>
+                        <Button Name="xBtAddJoueur"
+                                Width="100"
+                                Margin="-220,10,0,0"
+                                VerticalAlignment="Center"
+                                Content="Nouveau joueur"
+                                Click="xBtAddJoueur_Click" />
+                        <StackPanel Margin="0,5,0,5"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="Nombre de joueurs : " />
+                            <TextBlock Text="{Binding NbJoueurs}" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <Expander Header="Options"
+                          IsExpanded="True">
+                    <StackPanel Margin="0,5,0,5"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <CheckBox Content="Aller/Retour"
+                                  Name="xCBAR"
+                                  IsChecked="False"
+                                  Margin="0,0,10,0"
+                                  ToolTip="Uniquement disponible en mode Championnat" />
+                        <CheckBox Content="Choix raquettes"
+                                  Name="xCBCR"
+                                  IsChecked="True"
+                                  Margin="0,0,10,0"
+                                  ToolTip="Pour chaque rencontre, un tirage au sort est effectué afin de déterminer une équipe prioritaire" />
+                    </StackPanel>
+                </Expander>
+                <Button Name="xBlancer"
+                        Margin="0,20,0,0"
+                        Content="C'est parti !"
+                        Width="100"
+                        Click="xBlancer_Click" />
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Classement"
+                 Name="xOngletClassement">
+            <StackPanel Orientation="Vertical">
+                <DataGrid MaxHeight="600"                          
+                          Name="xDGClassement"
+                          AlternatingRowBackground="BlanchedAlmond"
+                          ItemsSource="{Binding ListeJoueurClassement, Mode=TwoWay}"
+                          IsSynchronizedWithCurrentItem="True"
+                          AutoGenerateColumns="False"
+                          CanUserResizeColumns="False"
+                          CanUserReorderColumns="False"
+                          CanUserAddRows="False"
+                          LoadingRow="xDGClassement_LoadingRow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Joueur"
+                                            Width="120"
+                                            Binding="{Binding Nom}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Points"
+                                            Width="80"
+                                            Binding="{Binding Points}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Nb Matchs"
+                                            Width="80"
+                                            Binding="{Binding NbMatch}" />
+                        <DataGridTextColumn Header="Pt/Matchs"
+                                            Width="80"
+                                            Binding="{Binding RatioPoint}" />
+                        <DataGridTextColumn Header="Nb Tournois"
+                                            Width="80"
+                                            Binding="{Binding NbTournois}" />
+                        <DataGridTextColumn Header="Nb Victoires"
+                                            Width="80"
+                                            Binding="{Binding NbVictoires}" />
+                        <DataGridTextColumn Header="Nb Défaites"
+                                            Width="80"
+                                            Binding="{Binding NbDefaites}" />
+                        <DataGridTextColumn Header="% Victoire"
+                                            Width="80"
+                                            Binding="{Binding Pourcentage}" />
+                        <DataGridTextColumn Header="Nb Titres"
+                                            Width="80"
+                                            Binding="{Binding NbTitres}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Name="xBtEnvoyerClassement"
+                        Margin="0,20,0,0"
+                        Content="Envoyer résultats"
+                        Width="100"
+                        Click="xBtEnvoyerClassement_Click" />
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Classement par équipes"
+                 Name="xOngletClassementEquipe">
+            <StackPanel Orientation="Vertical">
+                <DataGrid MaxHeight="600"
+                          AlternatingRowBackground="BlanchedAlmond"
+                          Name="xDGClassementEquipe"
+                          ItemsSource="{Binding ListeEquipeClassement, Mode=TwoWay}"
+                          IsSynchronizedWithCurrentItem="True"
+                          AutoGenerateColumns="False"
+                          CanUserResizeColumns="False"
+                          CanUserReorderColumns="False"
+                          CanUserAddRows="False"
+                          LoadingRow="xDGClassementEquipe_LoadingRow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Equipe"
+                                            Width="150"
+                                            Binding="{Binding Nom}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Points"
+                                            Width="80"
+                                            Binding="{Binding Points}"
+                                            IsReadOnly="True" />
+                        <DataGridTextColumn Header="Nb Matchs"
+                                            Width="80"
+                                            Binding="{Binding NbMatch}" />
+                        <DataGridTextColumn Header="Pt/Matchs"
+                                            Width="80"
+                                            Binding="{Binding RatioPoint}" />
+                        <DataGridTextColumn Header="Nb Tournois"
+                                            Width="80"
+                                            Binding="{Binding NbTournois}" />
+                        <DataGridTextColumn Header="Nb Victoires"
+                                            Width="80"
+                                            Binding="{Binding NbVictoires}" />
+                        <DataGridTextColumn Header="Nb Défaites"
+                                            Width="80"
+                                            Binding="{Binding NbDefaites}" />
+                        <DataGridTextColumn Header="% Victoire"
+                                            Width="80"
+                                            Binding="{Binding Pourcentage}" />
+                        <DataGridTextColumn Header="Nb Titres"
+                                            Width="80"
+                                            Binding="{Binding NbTitres}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Button Name="xBtEnvoyerClassementEquipe"
+                        Margin="0,20,0,0"
+                        Content="Envoyer résultats"
+                        Width="100"
+                        Click="xBtEnvoyerClassementEquipe_Click" />
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>
